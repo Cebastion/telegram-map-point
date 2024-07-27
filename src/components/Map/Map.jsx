@@ -32,15 +32,13 @@ const Map = () => {
     if(userLocation && points) {
       CheckPointDistance(userLocation, points, setVisiblePoints, mapRef, setPopUp, setActivePoint)
     }
-  }, [userLocation])
-
+  }, [userLocation, points])
 
   useEffect(() => {
     if (userLocation && mapInitialized.current) {
       UpdateUserLocation(mapRef, userLocation)
     }
   }, [userLocation])
-
 
   return (
     <>

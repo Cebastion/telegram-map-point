@@ -3,8 +3,8 @@ import { RemovePoints } from './RemovePoint.util'
 
 const CheckPointDistance = (userLocation, points, setVisiblePoints, mapRef, setPopUp, setActivePoint) => {
   const R = 6371000; // Радиус Земли в метрах
-  const radius = 500; // Радиус пользователя в метрах
-  const VisiblePoints = [];
+  const radius = 500; // Радиус пользователя в метрах (500 метров)
+  const visiblePoints = [];
 
   points.forEach(point => {
     const dLat = ((point.coordinates.latitude - userLocation.latitude) * Math.PI) / 180;
@@ -16,18 +16,18 @@ const CheckPointDistance = (userLocation, points, setVisiblePoints, mapRef, setP
     const distance = R * 2 * Math.asin(Math.sqrt(a));
 
     if (distance <= radius) {
-      if (!VisiblePoints.find(p => p.coordinates.latitude === point.coordinates.latitude && p.coordinates.longitude === point.coordinates.longitude)) {
-        VisiblePoints.push(point);
+      if (!visiblePoints.find(p => p.coordinates.latitude === point.coordinates.latitude && p.coordinates.longitude === point.coordinates.longitude)) {
+        visiblePoints.push(point);
       }
     }
   });
 
-  setVisiblePoints(VisiblePoints);
+  setVisiblePoints(visiblePoints);
 
   RemovePoints(mapRef);
 
-  VisiblePoints.forEach(point => {
-    AddPoint(mapRef, point, setPopUp, setActivePoint, VisiblePoints);
+  visiblePoints.forEach(point => {
+    AddPoint(mapRef, point, setPopUp, setActivePoint);
   });
 }
 
