@@ -6,7 +6,7 @@ const InitMap = (mapInitialized, mapRef, userLocation) => {
 
     const map = new ymaps.Map(mapRef.current, {
       center: [userLocation.latitude, userLocation.longitude],
-      zoom: 20,
+      zoom: 15,
     });
 
     mapInitialized.current = true;

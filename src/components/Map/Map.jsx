@@ -5,6 +5,7 @@ import { GetData } from '../../API/GetData'
 import { CheckPointDistance } from '../../utils/CheckPointDistance.until'
 import style from './Map.module.scss'
 import PopUp from '../PopUp/PopUp'
+import { UpdateUserLocation } from '../../utils/UpdateUserLocation.util'
 
 const Map = () => {
   const [popUp, setPopUp] = useState(false)
@@ -32,6 +33,13 @@ const Map = () => {
       CheckPointDistance(userLocation, points, setVisiblePoints, mapRef, setPopUp, setActivePoint)
     }
   }, [userLocation, visiblePoints])
+
+
+  useEffect(() => {
+    if (userLocation && mapInitialized.current) {
+      UpdateUserLocation(mapRef, userLocation);
+    }
+  }, [userLocation]);
 
 
   return (
