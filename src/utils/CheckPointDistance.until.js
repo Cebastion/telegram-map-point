@@ -8,7 +8,7 @@ const CheckPointDistance = (userLocation, points, setVisiblePoints, mapRef, setP
 
   if (mapRef.current.placemark) {
     mapRef.current.placemark.geometry.setCoordinates([userLocation.latitude, userLocation.longitude]);
-    mapRef.current.mapInstance.setCenter([userLocation.latitude, newLocation.longitude]);
+    mapRef.current.mapInstance.setCenter([userLocation.latitude, userLocation.longitude]);
   }
 
   points.forEach(point => {
