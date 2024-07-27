@@ -9,16 +9,16 @@ import { UpdateUserLocation } from '../../utils/UpdateUserLocation.util'
 
 const Map = () => {
   const [popUp, setPopUp] = useState(false)
-  const [userLocation, setUserLocation] = useState(null);
-  const [visiblePoints, setVisiblePoints] = useState([]);
-  const [activePoint, setActivePoint] = useState(null);
-  const [points, setPoints] = useState([]);
-  const mapRef = useRef(null);
-  const mapInitialized = useRef(false);
+  const [userLocation, setUserLocation] = useState(null)
+  const [visiblePoints, setVisiblePoints] = useState([])
+  const [activePoint, setActivePoint] = useState(null)
+  const [points, setPoints] = useState([])
+  const mapRef = useRef(null)
+  const mapInitialized = useRef(false)
 
   useEffect(() => {
     GetData(setPoints)
-  })
+  }, [])
 
   useEffect(() => {
     GetUserLocation(setUserLocation)
@@ -32,14 +32,14 @@ const Map = () => {
     if(userLocation && points) {
       CheckPointDistance(userLocation, points, setVisiblePoints, mapRef, setPopUp, setActivePoint)
     }
-  }, [userLocation, visiblePoints])
+  }, [userLocation])
 
 
   useEffect(() => {
     if (userLocation && mapInitialized.current) {
-      UpdateUserLocation(mapRef, userLocation);
+      UpdateUserLocation(mapRef, userLocation)
     }
-  }, [userLocation]);
+  }, [userLocation])
 
 
   return (
