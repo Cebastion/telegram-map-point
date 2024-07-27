@@ -7,10 +7,12 @@ const GenerateColor = () => {
   return color;
 }
 
-const AddPoint = (mapRef, point, setPopUp, setActivePoint) => {
+const AddPoint = (mapRef, point, setPopUp, setActivePoint, VisiblePoints) => {
   const ymaps = window.ymaps;
 
   if (!mapRef.current.mapInstance) return;
+
+  if(VisiblePoints.find(p => p.coordinates.latitude === point.coordinates.latitude && p.coordinates.longitude === point.coordinates.longitude)) return
 
   const marker = new ymaps.Placemark(
     [point.coordinates.latitude, point.coordinates.longitude],

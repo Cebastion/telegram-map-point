@@ -27,7 +27,7 @@ const CheckPointDistance = (userLocation, points, setVisiblePoints, mapRef, setP
   RemovePoints(mapRef);
 
   VisiblePoints.forEach(point => {
-    AddPoint(mapRef, point, setPopUp, setActivePoint);
+    AddPoint(mapRef, point, setPopUp, setActivePoint, VisiblePoints);
   });
 }
 
