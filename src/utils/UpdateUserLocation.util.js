@@ -5,5 +5,4 @@ const UpdateUserLocation = (mapRef, newLocation) => {
   }
 }
 
-
 export { UpdateUserLocation }

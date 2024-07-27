@@ -21,11 +21,15 @@ const Map = () => {
   }, [])
 
   useEffect(() => {
-    GetUserLocation(setUserLocation)
+    const watchId = GetUserLocation(setUserLocation)
 
     if (userLocation && !mapInitialized.current) {
       InitMap(mapInitialized, mapRef, userLocation)
       mapRef.current.markers = []; // Инициализируем массив маркеров
+    }
+
+    return () => {
+      navigator.geolocation.clearWatch(watchId);
     }
   }, [userLocation])
 
