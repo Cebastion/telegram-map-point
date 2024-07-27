@@ -1,4 +1,4 @@
-import { AddPoint } from './AddPoint.util'
+import { AddPoint, TogglePointVisibility } from './AddPoint.util'
 import { RemovePoints } from './RemovePoint.util'
 
 const CheckPointDistance = (userLocation, points, setVisiblePoints, mapRef, setPopUp, setActivePoint) => {
@@ -24,10 +24,25 @@ const CheckPointDistance = (userLocation, points, setVisiblePoints, mapRef, setP
 
   setVisiblePoints(visiblePoints);
 
-  RemovePoints(mapRef);
+  // Удаляем точки, которые больше не видимы, если они существуют
+  if (mapRef.current.markers) {
+    mapRef.current.markers.forEach(marker => {
+      const markerPoint = marker.properties.get('pointData');
+      if (!visiblePoints.find(p => p.coordinates.latitude === markerPoint.coordinates.latitude && p.coordinates.longitude === markerPoint.coordinates.longitude)) {
+        mapRef.current.mapInstance.geoObjects.remove(marker);
+      }
+    });
+  }
 
   visiblePoints.forEach(point => {
-    AddPoint(mapRef, point, setPopUp, setActivePoint);
+    if (!mapRef.current.markers || !mapRef.current.markers.find(marker => {
+      const markerPoint = marker.properties.get('pointData');
+      return markerPoint.coordinates.latitude === point.coordinates.latitude && markerPoint.coordinates.longitude === point.coordinates.longitude;
+    })) {
+      AddPoint(mapRef, point, setPopUp, setActivePoint);
+    } else {
+      TogglePointVisibility(mapRef, point, true);
+    }
   });
 }
 

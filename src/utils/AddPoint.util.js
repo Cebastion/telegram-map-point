@@ -12,12 +12,12 @@ const AddPoint = (mapRef, point, setPopUp, setActivePoint) => {
 
   if (!mapRef.current.mapInstance) return;
 
-  // if(VisiblePoints.find(p => p.coordinates.latitude === point.coordinates.latitude && p.coordinates.longitude === point.coordinates.longitude)) return
-
   const marker = new ymaps.Placemark(
     [point.coordinates.latitude, point.coordinates.longitude],
     {
-      //balloonContent: point.description || 'Маркер',
+      // Данные маркера
+      pointData: point,
+      balloonContent: point.description || 'Маркер',
     },
     {
       preset: 'islands#circleDotIcon',
@@ -26,8 +26,8 @@ const AddPoint = (mapRef, point, setPopUp, setActivePoint) => {
   );
 
   marker.events.add('click', () => {
-    setPopUp(true)
-    setActivePoint(point)
+    setPopUp(true);
+    setActivePoint(point);
   });
 
   mapRef.current.mapInstance.geoObjects.add(marker);
@@ -35,4 +35,19 @@ const AddPoint = (mapRef, point, setPopUp, setActivePoint) => {
   mapRef.current.markers.push(marker);
 }
 
-export { AddPoint }
+const TogglePointVisibility = (mapRef, point, visible) => {
+  const marker = mapRef.current.markers.find(marker => {
+    const markerPoint = marker.properties.get('pointData');
+    return markerPoint.coordinates.latitude === point.coordinates.latitude && markerPoint.coordinates.longitude === point.coordinates.longitude;
+  });
+
+  if (marker) {
+    if (visible) {
+      mapRef.current.mapInstance.geoObjects.add(marker);
+    } else {
+      mapRef.current.mapInstance.geoObjects.remove(marker);
+    }
+  }
+}
+
+export { AddPoint, TogglePointVisibility }

@@ -23,13 +23,14 @@ const Map = () => {
   useEffect(() => {
     GetUserLocation(setUserLocation)
 
-    if(userLocation && !mapInitialized.current) {
+    if (userLocation && !mapInitialized.current) {
       InitMap(mapInitialized, mapRef, userLocation)
+      mapRef.current.markers = []; // Инициализируем массив маркеров
     }
   }, [userLocation])
 
   useEffect(() => {
-    if(userLocation && points) {
+    if (userLocation && points) {
       CheckPointDistance(userLocation, points, setVisiblePoints, mapRef, setPopUp, setActivePoint)
     }
   }, [userLocation, points])
