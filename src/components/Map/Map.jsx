@@ -24,9 +24,9 @@ const Map = () => {
     }
 
     if(userLocation && points) {
-      CheckPointDistance(userLocation, points, setVisiblePoints, mapRef, setPopUp, setActivePoint)
+      CheckPointDistance(userLocation, points, visiblePoints, setVisiblePoints, mapRef, setPopUp, setActivePoint)
     }
-  }, [userLocation, points, mapInitialized.current])
+  }, [userLocation, points, mapInitialized.current, visiblePoints])
 
 
   return (
