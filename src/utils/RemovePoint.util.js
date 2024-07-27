@@ -1,11 +1,15 @@
-const RemovePoints = (mapRef) => {
+const RemovePoint = (mapRef, point) => {
   if (!mapRef.current.mapInstance || !mapRef.current.markers) return;
 
-  mapRef.current.markers.forEach(marker => {
-    mapRef.current.mapInstance.geoObjects.remove(marker);
-  });
+  const markerIndex = mapRef.current.markers.findIndex(marker => 
+    marker.geometry.getCoordinates()[0] === point.coordinates.latitude &&
+    marker.geometry.getCoordinates()[1] === point.coordinates.longitude
+  );
 
-  mapRef.current.markers = [];
+  if (markerIndex !== -1) {
+    mapRef.current.mapInstance.geoObjects.remove(mapRef.current.markers[markerIndex]);
+    mapRef.current.markers.splice(markerIndex, 1);
+  }
 }
 
-export { RemovePoints }
+export { RemovePoint }
