@@ -17,16 +17,21 @@ const Map = () => {
 
   useEffect(() => {
     GetData(setPoints)
+  })
+
+  useEffect(() => {
     GetUserLocation(setUserLocation)
 
     if(userLocation && !mapInitialized.current) {
       InitMap(mapInitialized, mapRef, userLocation)
     }
+  }, [userLocation])
 
+  useEffect(() => {
     if(userLocation && points) {
       CheckPointDistance(userLocation, points, setVisiblePoints, mapRef, setPopUp, setActivePoint)
     }
-  }, [userLocation, visiblePoints])
+  }, [visiblePoints])
 
 
   return (
