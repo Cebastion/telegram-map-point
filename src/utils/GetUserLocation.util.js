@@ -19,4 +19,4 @@ const GetUserLocation = (setUserLocation) => {
   }
 };
 
-export default GetUserLocation
+export  { GetUserLocation }

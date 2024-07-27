@@ -31,4 +31,4 @@ const InitMap = (mapInitialized, mapRef, userLocation) => {
   });
 }
 
-export default InitMap
+export { InitMap }
