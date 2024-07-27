@@ -1,15 +1,15 @@
 const InitMap = (mapInitialized, mapRef, userLocation) => {
-  const ymaps = window.ymaps;
+  const ymaps = window.ymaps
 
   ymaps.ready(() => {
-    if (mapInitialized.current || !userLocation) return;
+    if (mapInitialized.current || !userLocation) return
 
     const map = new ymaps.Map(mapRef.current, {
       center: [userLocation.latitude, userLocation.longitude],
       zoom: 15,
-    });
+    })
 
-    mapInitialized.current = true;
+    mapInitialized.current = true
 
     const placemark = new ymaps.Placemark(
       [userLocation.latitude, userLocation.longitude],
@@ -20,15 +20,15 @@ const InitMap = (mapInitialized, mapRef, userLocation) => {
         preset: 'islands#icon',
         iconColor: '#0095b6',
       }
-    );
+    )
 
-    map.geoObjects.add(placemark);
+    map.geoObjects.add(placemark)
 
-    map.setCenter([userLocation.latitude, userLocation.longitude]);
+    map.setCenter([userLocation.latitude, userLocation.longitude])
 
-    mapRef.current.mapInstance = map;
-    mapRef.current.placemark = placemark;
-  });
+    mapRef.current.mapInstance = map
+    mapRef.current.placemark = placemark
+  })
 }
 
 export { InitMap }

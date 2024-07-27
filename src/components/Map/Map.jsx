@@ -8,58 +8,71 @@ import PopUp from '../PopUp/PopUp'
 import { UpdateUserLocation } from '../../utils/UpdateUserLocation.util'
 
 const Map = () => {
-  const [popUp, setPopUp] = useState(false)
-  const [userLocation, setUserLocation] = useState(null)
-  const [visiblePoints, setVisiblePoints] = useState([])
-  const [activePoint, setActivePoint] = useState(null)
-  const [points, setPoints] = useState([])
-  const mapRef = useRef(null)
-  const mapInitialized = useRef(false)
+	const [popUp, setPopUp] = useState(false)
+	const [userLocation, setUserLocation] = useState(null)
+	const [visiblePoints, setVisiblePoints] = useState([])
+	const [activePoint, setActivePoint] = useState(null)
+	const [points, setPoints] = useState([])
+	const mapRef = useRef(null)
+	const mapInitialized = useRef(false)
 
-  useEffect(() => {
-    GetData(setPoints)
-  }, [])
+	useEffect(() => {
+		GetData(setPoints)
+	}, [])
 
-  useEffect(() => {
-    GetUserLocation(setUserLocation)
+	useEffect(() => {
+		GetUserLocation(setUserLocation)
 
-    if (userLocation && !mapInitialized.current) {
-      InitMap(mapInitialized, mapRef, userLocation)
-      mapRef.current.markers = []; // Инициализируем массив маркеров
-    }
-  }, [userLocation])
+		if (userLocation && !mapInitialized.current) {
+			InitMap(mapInitialized, mapRef, userLocation)
+			mapRef.current.markers = []
+		}
+	}, [userLocation])
 
-  useEffect(() => {
-    if (userLocation && points) {
-      CheckPointDistance(userLocation, points, setVisiblePoints, mapRef, setPopUp, setActivePoint)
-    }
-  }, [userLocation, points])
+	useEffect(() => {
+		if (userLocation && points) {
+			CheckPointDistance(
+				userLocation,
+				points,
+				setVisiblePoints,
+				mapRef,
+				setPopUp,
+				setActivePoint
+			)
+		}
+	}, [userLocation, points])
 
-  useEffect(() => {
-    if (userLocation && mapInitialized.current) {
-      navigator.geolocation.watchPosition(
-        (position) => {
-          const { latitude, longitude } = position.coords;
-          UpdateUserLocation(mapRef, { latitude, longitude })
-        },
-        (error) => {
-          console.error('Error watching user location:', error);
-        },
-        {
-          enableHighAccuracy: true,
-          timeout: 10000,
-          maximumAge: 0
-        }
-      );
-    }
-  }, [userLocation, points, visiblePoints, mapInitialized.current])
+	useEffect(() => {
+		if (userLocation && mapInitialized.current) {
+			navigator.geolocation.watchPosition(
+				position => {
+					const { latitude, longitude } = position.coords
+					UpdateUserLocation(mapRef, { latitude, longitude })
+				},
+				error => {
+					console.error('Error watching user location:', error)
+				},
+				{
+					enableHighAccuracy: true,
+					timeout: 10000,
+					maximumAge: 0,
+				}
+			)
+		}
+	}, [userLocation, points, visiblePoints, mapInitialized.current])
 
-  return (
-    <>
-      <div ref={mapRef} className={style.map}></div>
-      {popUp && <PopUp activePoint={activePoint} SetPopUp={setPopUp} setActivePoint={setActivePoint}/>}
-    </>
-  )
+	return (
+		<>
+			<div ref={mapRef} className={style.map}></div>
+			{popUp && (
+				<PopUp
+					activePoint={activePoint}
+					SetPopUp={setPopUp}
+					setActivePoint={setActivePoint}
+				/>
+			)}
+		</>
+	)
 }
 
 export default Map
