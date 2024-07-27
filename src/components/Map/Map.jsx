@@ -21,15 +21,11 @@ const Map = () => {
   }, [])
 
   useEffect(() => {
-    const watchId = GetUserLocation(setUserLocation)
+    GetUserLocation(setUserLocation)
 
     if (userLocation && !mapInitialized.current) {
       InitMap(mapInitialized, mapRef, userLocation)
       mapRef.current.markers = []; // Инициализируем массив маркеров
-    }
-
-    return () => {
-      navigator.geolocation.clearWatch(watchId);
     }
   }, [userLocation])
 
@@ -41,7 +37,20 @@ const Map = () => {
 
   useEffect(() => {
     if (userLocation && mapInitialized.current) {
-      UpdateUserLocation(mapRef, userLocation)
+      navigator.geolocation.watchPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          UpdateUserLocation(mapRef, { latitude, longitude })
+        },
+        (error) => {
+          console.error('Error watching user location:', error);
+        },
+        {
+          enableHighAccuracy: true,
+          timeout: 10000,
+          maximumAge: 0
+        }
+      );
     }
   }, [userLocation, points, visiblePoints, mapInitialized.current])
 

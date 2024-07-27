@@ -1,6 +1,6 @@
 const GetUserLocation = (setUserLocation) => {
   if (navigator.geolocation) {
-    const watchId = navigator.geolocation.watchPosition(
+    navigator.geolocation.watchPosition(
       (position) => {
         const { latitude, longitude } = position.coords;
         setUserLocation({ latitude, longitude });
@@ -14,8 +14,6 @@ const GetUserLocation = (setUserLocation) => {
         maximumAge: 0
       }
     );
-
-    return watchId;
   } else {
     console.error('Geolocation is not supported by this browser.');
   }
