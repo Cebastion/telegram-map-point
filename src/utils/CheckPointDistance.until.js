@@ -1,5 +1,7 @@
 import { AddPoint } from './AddPoint.util'
-import { RemovePoints } from './RemovePoint.util'
+import { RemovePoint } from './RemovePoint.util'
+
+const generatePointKey = (point) => `${point.coordinates.latitude},${point.coordinates.longitude}`;
 
 const CheckPointDistance = (userLocation, points, visiblePoints, setVisiblePoints, mapRef, setPopUp, setActivePoint) => {
   const R = 6371000; // Радиус Земли в метрах
@@ -22,14 +24,14 @@ const CheckPointDistance = (userLocation, points, visiblePoints, setVisiblePoint
 
   // Remove points that are no longer visible
   visiblePoints.forEach(point => {
-    if (!newVisiblePoints.includes(point)) {
-      RemovePoints(mapRef, point);
+    if (!newVisiblePoints.some(newPoint => generatePointKey(newPoint) === generatePointKey(point))) {
+      RemovePoint(mapRef, point);
     }
   });
 
   // Add new visible points
   newVisiblePoints.forEach(point => {
-    if (!visiblePoints.includes(point)) {
+    if (!visiblePoints.some(visiblePoint => generatePointKey(visiblePoint) === generatePointKey(point))) {
       AddPoint(mapRef, point, setPopUp, setActivePoint);
     }
   });
