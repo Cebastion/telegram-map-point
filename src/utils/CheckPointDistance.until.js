@@ -6,11 +6,6 @@ const CheckPointDistance = (userLocation, points, setVisiblePoints, mapRef, setP
   const radius = 500; // Радиус пользователя в метрах (500 метров)
   const visiblePoints = [];
 
-  if (mapRef.current.placemark) {
-    mapRef.current.placemark.geometry.setCoordinates([userLocation.latitude, userLocation.longitude]);
-    mapRef.current.mapInstance.setCenter([userLocation.latitude, userLocation.longitude]);
-  }
-
   points.forEach(point => {
     const dLat = ((point.coordinates.latitude - userLocation.latitude) * Math.PI) / 180;
     const dLon = ((userLocation.longitude - point.coordinates.longitude) * Math.PI) / 180;

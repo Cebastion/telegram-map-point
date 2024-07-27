@@ -39,11 +39,11 @@ const Map = () => {
     }
   }, [userLocation, points])
 
-  // useEffect(() => {
-  //   if (userLocation && mapInitialized.current) {
-  //     UpdateUserLocation(mapRef, userLocation)
-  //   }
-  // }, [userLocation])
+  useEffect(() => {
+    if (userLocation && mapInitialized.current) {
+      UpdateUserLocation(mapRef, userLocation)
+    }
+  }, [userLocation, points, visiblePoints, mapInitialized.current])
 
   return (
     <>
