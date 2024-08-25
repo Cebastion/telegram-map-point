@@ -25,7 +25,7 @@ const Map = () => {
 		GetUserLocation(setUserLocation)
 
 		if (userLocation && !mapInitialized.current) {
-			InitMap(mapInitialized, mapRef, userLocation, setTargetUser)
+			InitMap(mapInitialized, mapRef, userLocation, setTargetUser, TargetUser)
 			mapRef.current.markers = []
 		}
 	}, [userLocation])
