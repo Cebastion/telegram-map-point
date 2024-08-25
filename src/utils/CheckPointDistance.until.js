@@ -1,7 +1,7 @@
 import { AddPoint, TogglePointVisibility } from './AddPoint.util'
 const CheckPointDistance = (userLocation, points, setVisiblePoints, mapRef, setPopUp, setActivePoint) => {
   const R = 6371000 // Радиус Земли в метрах
-  const radius = 500 // Радиус пользователя в метрах (500 метров)
+  const radius = 6371000 // Радиус пользователя в метрах (500 метров)
   const visiblePoints = []
 
   points.forEach(point => {

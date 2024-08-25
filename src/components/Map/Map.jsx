@@ -8,6 +8,7 @@ import PopUp from '../PopUp/PopUp'
 import { UpdateUserLocation } from '../../utils/UpdateUserLocation.util'
 
 const Map = () => {
+	const [TargetUser, setTargetUser] = useState(true)
 	const [popUp, setPopUp] = useState(false)
 	const [userLocation, setUserLocation] = useState(null)
 	const [visiblePoints, setVisiblePoints] = useState([])
@@ -24,7 +25,7 @@ const Map = () => {
 		GetUserLocation(setUserLocation)
 
 		if (userLocation && !mapInitialized.current) {
-			InitMap(mapInitialized, mapRef, userLocation)
+			InitMap(mapInitialized, mapRef, userLocation, setTargetUser)
 			mapRef.current.markers = []
 		}
 	}, [userLocation])
@@ -47,7 +48,9 @@ const Map = () => {
 			navigator.geolocation.watchPosition(
 				position => {
 					const { latitude, longitude } = position.coords
-					UpdateUserLocation(mapRef, { latitude, longitude })
+					if(TargetUser) {
+						UpdateUserLocation(mapRef, { latitude, longitude })
+					}
 				},
 				error => {
 					console.error('Error watching user location:', error)

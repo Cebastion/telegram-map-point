@@ -1,4 +1,4 @@
-const InitMap = (mapInitialized, mapRef, userLocation) => {
+const InitMap = (mapInitialized, mapRef, userLocation, setTargetUser) => {
   const ymaps = window.ymaps
 
   ymaps.ready(() => {
@@ -26,8 +26,24 @@ const InitMap = (mapInitialized, mapRef, userLocation) => {
 
     map.setCenter([userLocation.latitude, userLocation.longitude])
 
+
+    const customButton = new ymaps.control.Button({
+      data: {
+        content: "Отключить привязку к своему месту положения",
+        title: "Отключить привязку к своему месту положения"
+      },
+      options: {
+        selectOnClick: true
+      }
+    });
+
+    customButton.events.add('click', function () {
+      setTargetUser(false)
+    });
+
     mapRef.current.mapInstance = map
     mapRef.current.placemark = placemark
+    map.controls.add(customButton, { float: 'left' });
   })
 }
 

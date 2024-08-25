@@ -16,7 +16,7 @@ const AddPoint = (mapRef, point, setPopUp, setActivePoint) => {
     [point.coordinates.latitude, point.coordinates.longitude],
     {
       pointData: point,
-      balloonContent: point.description || 'Маркер',
+      // balloonContent: point.description || 'Маркер',
     },
     {
       preset: 'islands#circleDotIcon',

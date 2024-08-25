@@ -1,5 +1,6 @@
 .popup_body {
   position: absolute;
+  overflow-y: scroll;
   z-index: 1000;
   top: 50%;
   left: 50%;
@@ -43,4 +44,8 @@
   cursor: pointer;
   font-size: 20px;
   font-weight: 600;
+}
+
+.popUp_button{
+  margin-bottom: 10px;
 }
