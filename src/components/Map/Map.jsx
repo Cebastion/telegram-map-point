@@ -44,13 +44,11 @@ const Map = () => {
 	}, [userLocation, points])
 
 	useEffect(() => {
-		if (userLocation && mapInitialized.current) {
+		if (userLocation && mapInitialized.current && TargetUser) {
 			navigator.geolocation.watchPosition(
 				position => {
 					const { latitude, longitude } = position.coords
-					if(TargetUser) {
-						UpdateUserLocation(mapRef, { latitude, longitude })
-					}
+					UpdateUserLocation(mapRef, { latitude, longitude })
 				},
 				error => {
 					console.error('Error watching user location:', error)
